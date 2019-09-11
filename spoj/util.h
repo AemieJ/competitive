@@ -1,7 +1,75 @@
 #include <iostream>
 #include <math.h>
-
+#include <string>
+#include <bits/stdc++.h>
 using namespace std;
+
+
+string calcDivision(string number , int divisor)
+{
+    string quotient;
+    int idx = 0;
+    int temp = number[idx]-'0';
+    while(temp < divisor)
+        temp = temp*10 + (number[++idx]-'0');
+    while(number.size() > idx)
+    {
+        quotient += temp/divisor + '0';
+        temp = (temp%divisor)*10 + (number[++idx]-'0');
+    }
+
+    return quotient;
+}
+
+string calcDifference(string number1 , string number2) 
+{
+    //string difference = " ";
+    int size = number2.length();
+    int sizeGreater = number1.length();
+    int borrow = 0;
+    for(int i=0 ; i < size ; i++)
+    {
+        number1[i] = (((number1[i]-'0')-borrow)+'0');
+        if((number1[i]-'0') >= (number2[i]-'0'))
+        {
+            number1[i] = ((number1[i]-'0') - (number2[i]-'0')) + '0';
+            borrow = 0;
+        }
+
+        else if((number1[i]-'0') < (number2[i]-'0'))
+        {
+            number1[i] = (((number1[i]-'0')+10) - (number2[i]-'0') + '0');
+            borrow=1;
+        }
+    }
+    if(number1[size] != '0')
+        number1[size] = (((number1[size]-'0')-borrow)+'0');
+    else if(number1[size] == '0' && borrow==1)
+    {
+        int count = size;
+        while(count < (sizeGreater-size) && number1[count] == '0')
+        {
+            number1[count] = (((number1[count]-'0')-borrow)+'0');
+            number1[count] = (((number1[count]-'0')+10)+ '0');
+            borrow=1;
+            count++;
+        }
+        number1[sizeGreater-1] = (((number1[sizeGreater-1]-'0')-borrow)+'0');
+    }
+    return number1;
+
+}
+
+string reverseString(string stringName) 
+{   
+    int size = stringName.length();
+    for(int i=0 ; i < size/2; i++)
+    {
+        swap(stringName[i], stringName[size-i-1]);
+    }
+    return stringName;
+}
+
 int powerCalculation(int base , int exponent)
 {
     int result = 1;
