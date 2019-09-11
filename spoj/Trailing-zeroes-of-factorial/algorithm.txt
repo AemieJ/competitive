@@ -1,0 +1,6 @@
+To count the trailing zeros in the factorial of a number , it is not required to find the factorial of a number.
+
+1. Intialize count to 0. 
+2. Run a loop from i to number/i>0 where i are the multiples of 5
+3. To count the number of trailing zeros it is simple as number/i and increament it to your count variable.
+4.The resultant count is the number of trailing zeros in the factorial of a number.
