@@ -4,6 +4,30 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+int inRangeofAlpha(string input)
+{
+        for(int i=1 ; i<=26 ; i++)
+        {
+            if (input == to_string(i))
+                return 1;
+        }
+        return 0;
+}
+
+int presenceofZero(string input)
+{
+    int countOfZero = 0;
+    for(int i=0 ; i < input.length() ; i++)
+    {
+        if(input[i]=='0')
+        {
+            countOfZero++;
+            break;
+        }
+
+    }
+    return countOfZero;
+}
 
 string calcDivision(string number , int divisor)
 {
@@ -47,7 +71,7 @@ string calcDifference(string number1 , string number2)
     else if(number1[size] == '0' && borrow==1)
     {
         int count = size;
-        while(count < (sizeGreater-size) && number1[count] == '0')
+        while(count <sizeGreater && number1[count] == '0')
         {
             number1[count] = (((number1[count]-'0')-borrow)+'0');
             number1[count] = (((number1[count]-'0')+10)+ '0');

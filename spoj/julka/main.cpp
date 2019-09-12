@@ -43,7 +43,7 @@ string calcDifference(string number1 , string number2)
     else if(number1[size] == '0' && borrow==1)
     {
         int count = size;
-        while(count < (sizeGreater-size) && number1[count] == '0')
+        while(count < sizeGreater && number1[count] == '0')
         {
             number1[count] = (((number1[count]-'0')-borrow)+'0');
             number1[count] = (((number1[count]-'0')+10)+ '0');
@@ -78,14 +78,13 @@ int main()
 
         noOfApples = reverseString(noOfApples);
         difference = reverseString(difference);
-
+    
         actualDifference = calcDifference(noOfApples, difference);
         actualDifference = reverseString(actualDifference);
         actualDifference.erase(0, min(actualDifference.find_first_not_of('0'), actualDifference.size() - 1)); //TO REMOVE ALL LEADING ZEROS IN ANY CASE
 
         actualResult2 = calcDivision(actualDifference, 2);
-        //RESULT 1 IS COMING WRONG BUT DIFFERENCE ALGORITHM IS RIGHT BECAUSE RESULT2 COMES CORRECT
-        actualResult1 = calcDifference(noOfApples, actualResult2);
+        actualResult1 = calcDifference(noOfApples, reverseString(actualResult2));
         actualResult1 = reverseString(actualResult1);
         actualResult1.erase(0, min(actualResult1.find_first_not_of('0'), actualResult1.size() - 1)); //TO REMOVE ALL LEADING ZEROS IN ANY CASE
         
