@@ -1,31 +1,35 @@
 #include <iostream>
 #include "util.h"
 #include <string>
-
+#include <sstream>
 #include <bits/stdc++.h> 
 
 using namespace std;
 
 int main()
 {
-    
-    string input , temp;
-    getline(cin , input);
-    int check = presenceofZero(input);  
-    vector <string> alphaCodes;
+    /*
+     PROBLEMS DEALING WITH LARGE NUMBERS ARE BEST TO BE HANDLED WITH STRINGS
+    */  
 
-    if(check==0)
+    long long int totalNumber , candy;
+
+    long long int sum=0;
+
+    cin >> totalNumber;
+
+    for(long long int _=0 ; _ < totalNumber ; _++)
     {
-        alphaCodes.push_back(input);
-        for(int i=0 ; i<input.length() ; i++)
-        {
-            if (i != input.length()-1)  
-                temp = ((input[i]-'0')*10 + (input[i+1]-'0')) + '0';
-                if(inRangeofAlpha(temp))    
-                    
-        }
+        cin >> candy;
+        sum += (candy%totalNumber);
     }
-        
+
+    if( sum%totalNumber == 0)
+        cout << "YES" << endl;
+    else 
+        cout << "NO" << endl;
+    
+    cout << endl;
 
     return 0;
 }
