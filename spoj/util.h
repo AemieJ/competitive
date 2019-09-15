@@ -1,9 +1,38 @@
 #include <iostream>
 #include <math.h>
 #include <string>
+#include <algorithm>
+#include <vector>
 #include <bits/stdc++.h>
 using namespace std;
 
+
+int checkOrderPossible(vector< int >input , int size)
+{
+        vector< int >stack;
+        int requiredValue = 1 , answer = 1;
+        for(int i=0 ; i< input.size() ; i++)
+        {
+            while(!stack.empty() && stack.back() == requiredValue)
+            {
+                requiredValue++;
+                stack.pop_back();
+            }
+
+            if (input[i] == requiredValue)
+                requiredValue++;
+            else if(!stack.empty() && stack.back() < input[i])
+            {
+                answer = 0;
+                break;
+            }
+            else 
+                stack.push_back(input[i]);
+        }
+
+        return answer;
+        
+}
 
 string reverseString(string stringName) 
 {   
@@ -14,6 +43,76 @@ string reverseString(string stringName)
     }
     return stringName;
 }
+int compare(string input1 , string input2) 
+{
+    if (input1 == input2) 
+            return 0;
+    if (input1 > input2) 
+            return 1;
+    return -1;
+}
+
+int isFeasible(long long int  array[] , long long int mid , long long int total , long long int expected)
+{
+    int taken=1;
+    long long int  last = array[0] , difference;
+    for(int i=1 ; i<total;i++)
+    {
+        if(array[i]-last >= mid)
+        {
+            taken++;
+            last = array[i];
+            if(taken==expected) 
+                return 1;
+        }
+    }
+    return 0;
+}
+
+long long int minDistance(long long int array[] , long long int total , long long int expected)
+{
+    long long int  low = array[0] , high = array[total-1];
+    long long int  mid , res = -1;
+    while(low < high)
+    {
+        mid = (low+high)/2;
+        if (isFeasible(array , mid , total , expected))
+        {
+            res = max(res,mid);
+            low = mid+1;
+        }
+
+        else   
+            high = mid;
+    }
+    return res;
+
+}
+
+bool compareNumbers(string str1, string str2) 
+{  
+    int n1 = str1.length(), n2 = str2.length(); 
+  
+    if (n1 < n2) 
+       return true; 
+    if (n2 < n1) 
+       return false; 
+  
+    for (int i=0; i<n1; i++) 
+    { 
+       if (str1[i] < str2[i]) 
+          return true; 
+       if (str1[i] > str2[i]) 
+          return false; 
+    } 
+  
+    return false; 
+} 
+   
+void sortNumberStrings(string arr[], int n) 
+{ 
+   sort(arr, arr+n, compareNumbers); 
+} 
 
 int allElementsNine(string input , int size)
 {
@@ -201,9 +300,31 @@ string calcDivision(string number , int divisor)
     return quotient;
 }
 
+string calcAddition(string number1 , string number2)
+{
+    int size = number2.length();
+    int sizeGreater = number1.length();
+    int carry = 0;
+    string result;
+    for(int i=0 ; i<size ; i++)
+    {
+        result += (((number1[i]-'0')+(number2[i]-'0') + carry)%10) + '0';
+        carry = (((number1[i]-'0')+(number2[i]-'0') + carry)/10) + '0';
+    }
+
+    for(int j=size ; j<sizeGreater ; j++)
+    {
+        result += (number1[j]-'0' + carry)%10 + '0';
+        carry = (number1[j]-'0' + carry)/10 + '0';
+    }
+
+    result = reverseString(result);
+    result.erase(0, min(result.find_first_not_of('0'), result.size()-1));
+    return result;
+}
+
 string calcDifference(string number1 , string number2) 
 {
-    //string difference = " ";
     int size = number2.length();
     int sizeGreater = number1.length();
     int borrow = 0;

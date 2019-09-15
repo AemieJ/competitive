@@ -1,0 +1,20 @@
+EXPLANATION OF POLYMORPHISM WITH USE OF PURE VIRTUAL KEYWORD
+
+NOTE := The only difference between a regular virtual function and a pure virtual function is that in virtual 
+function you may or may not override the virtual function in the derived classes and the code will still work . 
+But in pure virtual function you MUST OVERRIDE the virtual function in the derived classes or else an error will 
+be generated . 
+
+
+1.Both ninja and monster are the derived class and derive all the properties of the base class Enemy . 
+
+2. Enemy *enemy1 = &ninja; <= This line means that the ninja object created is also accessed by the enemy1 object
+which belongs to the class Enemy
+
+3. enemy1 -> setAttackPower(25); <= This line means that as the attackPower can be only modified by called the object 
+of the class . We do that and then we can access this attackPower in the Ninja class as the enemy1 object is pointing to the 
+address of the ninja object of class Ninja.
+
+4. enemy1 -> attack(); <= This line means that we called the virtual attack(){} function in the class Enemy and now 
+as we know that enemy1 points to the ninja object the attack() will be directly directed the attack() function within the 
+class Ninja and carry out its particular functioning.
