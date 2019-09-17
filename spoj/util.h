@@ -6,7 +6,25 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+int totalInversions(vector< int >array , int size)
+{
+    
+}
 
+int findWinner(vector< int>team1 , vector< int >team2)
+{
+    while (!team1.empty() && !team2.empty())
+    {
+        if(team1.back() < team2.back())
+            team1.pop_back();
+        if(team1.back() >= team2.back())
+            team2.pop_back();
+    }
+
+    if(team1.empty())
+        return 0;
+    return 1;
+}
 int checkOrderPossible(vector< int >input , int size)
 {
         vector< int >stack;
@@ -309,13 +327,13 @@ string calcAddition(string number1 , string number2)
     for(int i=0 ; i<size ; i++)
     {
         result += (((number1[i]-'0')+(number2[i]-'0') + carry)%10) + '0';
-        carry = (((number1[i]-'0')+(number2[i]-'0') + carry)/10) + '0';
+        carry = (((number1[i]-'0')+(number2[i]-'0') + carry)/10);
     }
 
     for(int j=size ; j<sizeGreater ; j++)
     {
         result += (number1[j]-'0' + carry)%10 + '0';
-        carry = (number1[j]-'0' + carry)/10 + '0';
+        carry = (number1[j]-'0' + carry)/10;
     }
 
     result = reverseString(result);
@@ -357,7 +375,9 @@ string calcDifference(string number1 , string number2)
         }
         number1[sizeGreater-1] = (((number1[sizeGreater-1]-'0')-borrow)+'0');
     }
-    return number1;
+    string result = reverseString(number1);
+    result.erase(0, min(result.find_first_not_of('0'), result.size()-1));
+    return result;
 
 }
 
