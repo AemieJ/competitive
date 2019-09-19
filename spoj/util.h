@@ -6,9 +6,59 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int totalInversions(vector< int >array , int size)
+long getCantorNumerator(long long int value)
 {
     
+}
+
+int getCantorTerm(long long int term)
+{
+
+}
+
+void updateBIT(int BIT[] , long long int index , long long int size)
+{
+        while(index <= size)
+        {
+            BIT[index] += 1;
+            index += (index) & (-index);
+        }
+}
+
+int totalSum(int BIT[] ,  long long int index)
+{
+    int sum = 0;
+    while(index > 0)
+    {
+        sum += BIT[index];
+        index -= (index) & (-index);
+    }   
+    return sum;
+}
+
+vector< int > convert(vector< int>array , long long int size)
+{
+    vector< int >copy = array;
+    sort(copy.begin() , copy.end());
+    for(int i=0 ; i< size ; i++)
+        array[i] = lower_bound(copy.begin() , copy.end() , array[i]) - copy.begin() + 1;
+    
+    return array;
+}
+
+int totalInversions(vector< int >array , long long int size)
+{
+    array = convert(array , size);
+    int BIT[size+1];
+    for(int i = 1;i < size ; ++i)
+        BIT[i] = 0;
+    int inverseCount = 0;
+    for(int i=size-1 ; i>=0 ; --i)
+    {
+        inverseCount += totalSum(BIT , array[i]-1);
+        updateBIT(BIT , array[i] , size);
+    }
+    return inverseCount;
 }
 
 int findWinner(vector< int>team1 , vector< int >team2)

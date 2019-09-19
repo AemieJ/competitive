@@ -8,18 +8,15 @@ using namespace std;
 
 int main()
 {
-    long long int total;
-    cin >> total;
-    vector< int >storeNum;
-    for(int _=0 ; _<total ; _++)
+    int test;
+    for(int _ = 0; _ < test ; _++)
     {
-        int number;
-        cin >> number;
-        storeNum.push_back(number);
+        long long int term;
+        cin >> term; 
+        long long int value = getCantorTerm(term);
+        long long int numerator = getCantorNumerator(value);
+        
     }
-
-    int count = totalInversions(storeNum , total);
-    cout << count << endl;
 
     return 0;
 }
