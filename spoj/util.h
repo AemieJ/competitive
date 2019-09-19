@@ -6,6 +6,85 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+long long getBFSMaxIndex(vector< long long>graph[] , int start , long long int vertices , long long int &index)
+{
+    queue<long long>bfs_queue;
+    int counter[vertices+1];
+    memset(counter , -1 , sizeof(counter));
+
+    bfs_queue.push(start);
+    counter[start] = 0;
+    while(!bfs_queue.empty())
+    {
+        long long int temp = bfs_queue.front();
+        bfs_queue.pop();
+        for(int i=0 ; i < graph[temp].size() ; ++i)
+        {
+            long long int adjacent = graph[temp][i];
+            if(counter[adjacent] == -1)
+            {
+                bfs_queue.push(adjacent);
+                counter[adjacent] = counter[temp] + 1;
+            }
+        }
+    }
+
+    long long int maxDistance = 0;
+    for(int i=1 ; i <= vertices ; ++i)
+    {
+        if(counter[i] > maxDistance)
+        {
+             maxDistance = counter[i];
+             index = i;
+        }
+    }
+    return maxDistance;
+
+}
+
+int getLongestPath(vector<long long>graph[] , int start , long long int vertices)
+{
+
+    long long int index=-1 , maxValue;
+    maxValue = getBFSMaxIndex(graph , start , vertices , index); 
+    start = index;   index = -1;
+    maxValue = getBFSMaxIndex(graph , start  , vertices , index);
+
+    return maxValue;
+}
+
+
+bool breathFirstSearch(vector< int >graph[] , long long int start , long long int vertices)
+{
+    bool visited[vertices+1] = {0};
+    queue< int >listOfVertices;
+    int counter = 0;
+    listOfVertices.push(start);
+    memset(visited,0,sizeof(visited));
+
+    while(!listOfVertices.empty())
+    {
+        long long int element = listOfVertices.front();
+        listOfVertices.pop();
+        visited[element] = 1;
+        
+        for(int i= 0 ; i < graph[element].size() ; ++i)
+        {
+            int adjacent = graph[element][i];
+            if(visited[adjacent])    
+                return 0;
+            else
+                listOfVertices.push(adjacent);
+            
+        }
+        ++counter;
+    }
+    if(counter != vertices)
+        return 0;
+    else 
+        return 1;
+}
+
 long getMaximumSet(long long int number)
 {
     if(number < 12)
