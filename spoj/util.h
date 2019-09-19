@@ -6,14 +6,41 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-long getCantorNumerator(long long int value)
+long getMaximumSet(long long int number)
 {
-    
+    if(number < 12)
+        return number;
+    else 
+    {
+        if((number/2 + number/3 + number/4) > number)
+            return getMaximumSet(number/2) +getMaximumSet(number/3)+getMaximumSet(number/4);
+    }
+    return number;
+}
+
+int getCantorNumerator(long long int value , long long int term)
+{
+    long long int index = term - (value*(value+1))/2;
+    long long int numerator;
+    if((value+1) %2 != 0)
+         numerator = (value - index) + 2;
+    if((value+1) %2 == 0)
+        numerator = index;
+
+    return numerator;
+        
 }
 
 int getCantorTerm(long long int term)
 {
-
+    long long int number = 0;
+    while(number >= -1)
+    {
+        if(term > (number*(number+1))/2 && term <= ((number+1)*(number+2))/2)
+            break;
+        ++number;
+    }
+    return number;
 }
 
 void updateBIT(int BIT[] , long long int index , long long int size)
