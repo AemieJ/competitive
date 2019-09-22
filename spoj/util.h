@@ -6,6 +6,18 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+vector< int > getInversePermutation(vector< int >array)
+{
+    
+    vector< int >output = array;
+    for(int i=0 ; i < array.size() ; ++i)
+    {
+        int value = array[i];
+        output[value-1] = i+1;
+    }
+    return output;
+}
+
 long long getBFSMaxIndex(vector< long long>graph[] , int start , long long int vertices , long long int &index)
 {
     queue<long long>bfs_queue;
