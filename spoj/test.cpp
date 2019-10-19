@@ -8,12 +8,6 @@ using namespace std;
 
 int main()
 {
-    int test , totalCards;
-    cin >> test;
-    for(int _=0 ; _<test ; _++)
-    {
-        
-
-    }
+    
     return 0;
 }

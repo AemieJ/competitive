@@ -6,6 +6,15 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+long long countTotalCards(long long int card)
+{
+    long long int count = 0;
+    for(long long int i = 1 ; i <= card ; ++i)
+        count += (i-1) + (2*i);
+    
+    return count;
+}
+
 int editDistance(string string1 , string string2 , int length1 , int length2)
 {
     int dpMatrix[length1+1][length2+1];
@@ -509,6 +518,7 @@ string calcDivision(string number , int divisor)
 
     return quotient;
 }
+
 
 string calcAddition(string number1 , string number2)
 {
