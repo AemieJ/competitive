@@ -26,6 +26,8 @@
         "typeinfo": "cpp",
         "string": "cpp",
         "regex": "cpp",
-        "vector": "cpp"
+        "vector": "cpp",
+        "deque": "cpp",
+        "functional": "cpp"
     }
 }
