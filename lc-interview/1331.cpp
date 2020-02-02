@@ -42,17 +42,16 @@ class Solution {
 public:
     vector<int> arrayRankTransform(vector<int>& arr) {
         vector<int>res(arr.size(), INT_MAX);
-        vector<int>check(arr.size(), INT_MAX);
         
-        int index = 0, val = 0;
+        int index = 0, val = 0, prevVal;
         for(int i=0; i < arr.size(); ++i) {
             int pos = min_element(arr.begin(),arr.end()) - arr.begin();
             ++val;
-            if (find(check.begin(), check.end(), arr.at(pos)) != check.end()) 
+            if (arr[pos] == prevVal) 
                 val = res.at(index);
             res.at(pos) = val;
             index = pos;
-            check.at(pos) = arr.at(pos);
+            prevVal = arr[pos];
             arr[pos] = INT_MAX;            
         }
         return res;
