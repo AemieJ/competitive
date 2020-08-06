@@ -16,21 +16,27 @@ bool isCycleBFS(vector<vector<int>> g);
 void dfs(vector<vector<int>> g);
 bool isCycleDFS(vector<vector<int>> g);
 
+void topologicalSortQueue(vector<vector<int>> g);
+void topologicalSortStack(vector<vector<int>> g); //Recursive func
+
 int main() {
     // Create the graph using adjacency matrix 
     vector<vector<int>> g; 
     g = {
-        {0, 1, 0, 0, 1},
-        {1, 0, 1, 1, 1},
-        {0, 1, 0, 1, 0},
-        {0, 1, 1, 0, 1},
-        {1, 1, 0, 1, 0}
+        {0, 0, 0, 0, 0, 0},
+        {0, 0, 0, 0, 0, 0},
+        {0, 0, 0, 1, 0, 0},
+        {0, 1, 0, 0, 0, 0},
+        {1, 1, 0, 0, 0, 0},
+        {1, 0, 1, 0, 0, 0}
     };
     printGraph(g);
-    bfs(g);
-    dfs(g);
-    cout << isCycleBFS(g) << endl;
-    cout << isCycleDFS(g) << endl;
+    // bfs(g);
+    // dfs(g);
+    // cout << isCycleBFS(g) << endl;
+    // cout << isCycleDFS(g) << endl;
+    topologicalSortQueue(g);
+    topologicalSortStack(g);
     return 0;
 }
 
@@ -150,3 +156,60 @@ bool isCycleDFS(vector<vector<int>> g) {
     }
     return false;
 }
+
+// Directed & Acyclic Graph
+void topologicalSortQueue(vector<vector<int>> g) {
+    int n = g.size();
+    vector<int> inorder(n, 0);
+    vector<int> res;
+    queue<int> q; 
+
+    for (int i = 0; i < n; ++i) {
+        for (int j = 0; j < n; ++j) {
+            if (g[i][j]) ++inorder[j];
+        }
+    }
+    
+    for (int k = 0; k < n; ++k) {
+        if (!inorder[k]) q.push(k);
+    }
+
+    while (!q.empty()) {
+        int top = q.front();
+        res.push_back(top);
+        q.pop();
+        for (int m = 0; m < n; ++m) {
+            if (g[top][m]) {
+                --inorder[m];
+                if (!inorder[m]) q.push(m);
+            }
+        }
+    }
+    printGraph(res);
+}
+
+void _topologicalSort(vector<vector<int>> &g, vector<int> &res, vector<int> &visited, int index) {
+    visited[index] = 1;
+    for (int j = 0; j < g.size(); ++j) {
+        if (g[index][j] && !visited[j]) {
+            _topologicalSort(g, res, visited, j);
+        }
+    }
+    res.push_back(index);
+}
+
+void topologicalSortStack(vector<vector<int>> g) {
+    int n = g.size();
+    vector<int> visited(n, 0);
+    vector<int> res;
+
+    for (int i = 0; i < n; ++i) {
+        if (!visited[i]) {
+            _topologicalSort(g, res, visited, i);
+        }
+    }
+    reverse(res.begin(), res.end());
+    printGraph(res);
+}
+
+/* Basic Key Points in Each Graph Algo */
