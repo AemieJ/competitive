@@ -12,22 +12,24 @@ void printGraph(vector<int> g);
 
 void bfs(vector<vector<int>> g);
 bool isCycleBFS(vector<vector<int>> g);
+bool isCycleDirectedQueue(vector<vector<int>> g);
 
 void dfs(vector<vector<int>> g);
 bool isCycleDFS(vector<vector<int>> g);
+bool isCycleDirectedStack(vector<vector<int>> g);
 
-void topologicalSortQueue(vector<vector<int>> g);
-void topologicalSortStack(vector<vector<int>> g); //Recursive func
+vector<int> topologicalSortQueue(vector<vector<int>> g);
+vector<int> topologicalSortStack(vector<vector<int>> g); //Recursive func
 
 int main() {
     // Create the graph using adjacency matrix 
     vector<vector<int>> g; 
     g = {
-        {0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0},
+        {0, 0, 0, 1, 0, 0},
+        {0, 0, 0, 0, 1, 0},
         {0, 0, 0, 1, 0, 0},
         {0, 1, 0, 0, 0, 0},
-        {1, 1, 0, 0, 0, 0},
+        {0, 1, 0, 0, 0, 0},
         {1, 0, 1, 0, 0, 0}
     };
     printGraph(g);
@@ -35,8 +37,10 @@ int main() {
     // dfs(g);
     // cout << isCycleBFS(g) << endl;
     // cout << isCycleDFS(g) << endl;
-    topologicalSortQueue(g);
-    topologicalSortStack(g);
+    // topologicalSortQueue(g);
+    // topologicalSortStack(g);
+    cout << isCycleDirectedStack(g) << endl;
+    cout << isCycleDirectedQueue(g) << endl;
     return 0;
 }
 
@@ -158,7 +162,7 @@ bool isCycleDFS(vector<vector<int>> g) {
 }
 
 // Directed & Acyclic Graph
-void topologicalSortQueue(vector<vector<int>> g) {
+vector<int> topologicalSortQueue(vector<vector<int>> g) {
     int n = g.size();
     vector<int> inorder(n, 0);
     vector<int> res;
@@ -186,6 +190,7 @@ void topologicalSortQueue(vector<vector<int>> g) {
         }
     }
     printGraph(res);
+    return res;
 }
 
 void _topologicalSort(vector<vector<int>> &g, vector<int> &res, vector<int> &visited, int index) {
@@ -198,7 +203,7 @@ void _topologicalSort(vector<vector<int>> &g, vector<int> &res, vector<int> &vis
     res.push_back(index);
 }
 
-void topologicalSortStack(vector<vector<int>> g) {
+vector<int> topologicalSortStack(vector<vector<int>> g) {
     int n = g.size();
     vector<int> visited(n, 0);
     vector<int> res;
@@ -210,6 +215,50 @@ void topologicalSortStack(vector<vector<int>> g) {
     }
     reverse(res.begin(), res.end());
     printGraph(res);
+    return res;
 }
 
-/* Basic Key Points in Each Graph Algo */
+bool isCycleDirectedStack(vector<vector<int>> g) {
+    int n = g.size(); 
+    vector<int> visited(n, -1);
+    bool inserted = false;
+    stack<int> s; 
+    s.push(0);
+    visited[0] = 0;
+
+    while (!s.empty()) {
+        int top = s.top();
+        for (int i = 0; i < n; ++i) {
+            if (g[top][i]) {
+                if (top == i) return true;
+                if (!visited[i]) return true;
+                if (visited[i] == -1) {
+                    s.push(i);
+                    visited[i] = 0;
+                    inserted = true;
+                    break;
+                }
+            }
+        }
+
+        if (!inserted) {
+            visited[top] = 1;
+            s.pop();
+        }
+    }
+    return false;
+}
+
+bool isCycleDirectedQueue(vector<vector<int>> g) {
+    return topologicalSortQueue(g).size() != g.size();
+}
+
+/* Basic Key Points in Each Graph Algo
+1. BFS & DFS
+   0 : unvisited node
+   1: visited node
+2. CYCLES IN A GRAPH
+   1: visited & popped
+   0: visited & within the data structure
+   -1: unvisited
+ */
