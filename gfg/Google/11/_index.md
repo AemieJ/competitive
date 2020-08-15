@@ -1,0 +1,2 @@
+# Count of strings that can be formed using a, b and c under given constraints
+Link is [here](https://practice.geeksforgeeks.org/problems/count-of-strings-that-can-be-formed-using-a-b-and-c-under-given-constraints/0)
