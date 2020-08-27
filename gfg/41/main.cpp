@@ -21,7 +21,7 @@ Cache::Cache(int c): capacity(c) {};
 
 void Cache::insert(const string &a, int val) {
     l.push_back({a, val});
-    m[a] == (--l.end());
+    m[a] = (--l.end());
 
     if (l.size() > capacity) {
         auto i = l.front();
@@ -64,13 +64,14 @@ void Cache::print() {
 
 int main() {
     Cache c(3);
-    c.set("Idi", 22);
-    c.set("Aemie", 20);
-    c.set("Shuri Da", 21);
-    c.set("Sahil", 19);
+    c.set("User1", 22);
+    c.set("User2", 20);
+    c.set("User3", 21);
+    c.set("User4", 19);
     c.print();
-    cout << c.get("Idi") << endl;
-    c.erase("Aemie");
+    cout << c.get("User1") << endl;
+    cout << c.get("User2") << endl;
+    c.erase("User2");
     c.print();
     return 0;
 }
